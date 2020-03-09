@@ -1,2 +1,3 @@
 # lambdata-jduke
-A practice 
+
+A practice repository
