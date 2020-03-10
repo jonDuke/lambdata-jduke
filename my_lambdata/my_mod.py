@@ -39,8 +39,9 @@ def train_test_split(dataframe, test_ratio=.3):
     """
 
     # ensure test_ratio is [0,1]
-    if (test_ratio > 1.0) | (test_ratio >= 0):
-        raise ValueError('test_ratio must be between 0.0 and 1.0')
+    if (test_ratio > 1.0) | (test_ratio < 0):
+        raise ValueError('test_ratio must be between 0.0 and 1.0, found', 
+                         test_ratio)
 
     # shuffle the dataframe to ensure a random split
     df = dataframe.copy()
@@ -69,22 +70,26 @@ def train_val_test_split(dataframe, val_ratio=.2, test_ratio=.2):
 
     # ensure test_ratio is [0,1]
     if (test_ratio > 1.0) | (test_ratio < 0):
-        raise ValueError('test_ratio must be between 0.0 and 1.0')
+        raise ValueError('test_ratio must be between 0.0 and 1.0, found', 
+                         test_ratio)
 
     # ensure val_ratio is [0,1]
     if (val_ratio > 1.0) | (val_ratio < 0):
-        raise ValueError('test_ratio must be between 0.0 and 1.0')
+        raise ValueError('test_ratio must be between 0.0 and 1.0, found', 
+                         val_ratio)
 
     # ensure test + val <= 1
     if (test_ratio + val_ratio > 1.0):
-        raise ValueError('test_ratio + val_ratio must be <= 1.0')
+        raise ValueError('test_ratio + val_ratio must be <= 1.0, found', 
+                         test_ratio + val_ratio)
 
-    # shuffle the dataframe to ensure a random split
-    df = dataframe.copy()
-    df = df.reindex(np.random.permutation(df.index))
+    # split once to get test
+    train, test = train_test_split(dataframe, test_ratio)
 
-    # return the split
-    test_cutoff = int(len(df) * test_ratio)
-    val_cutoff = int(len(df) * val_ratio) + test_cutoff
+    # recalculate ratio and split again to get val
+    train_ratio = 1 - (val_ratio + test_ratio)
+    sub_ratio = val_ratio / (val_ratio + train_ratio)
+    train, val = train_test_split(train, sub_ratio)
 
-    return df[:-val_cutoff], df[-val_cutoff:-test_cutoff], df[-test_cutoff:]
+    # return the results
+    return train, val, test
