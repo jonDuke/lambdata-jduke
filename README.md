@@ -2,20 +2,12 @@
 
 A practice repository
 
-Using the package from PIPY instructions:
-
-```py
-from my_lambdata.my_mod import say_hello
-
-say_hello()
-```
-
 <br>
 
 ## Installation
 
 ```sh
-cd path/to/lambdata-jduke
+pip install -i https://test.pypi.org/simple/ lambdata-jduke
 ```
 
 Install package dependencies:
@@ -26,8 +18,17 @@ pipenv install
 
 ## Usage
 
-An example script
+Example scripts
 
 ```sh
-python my_lambdata/my_script.py
+python -m my_lambdata.my_script
 ```
+
+```py
+import my_lambdata.my_mod as my_mod
+my_mod.say_hello()
+```
+
+## PyPI page
+
+https://test.pypi.org/project/lambdata-jduke/1.0/
