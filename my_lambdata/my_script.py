@@ -3,13 +3,13 @@
 import my_lambdata.my_mod as my_mod
 import pandas as pd
 
-df = pd.DataFrame({'A':range(10), 'B':range(10,20)})
+df = pd.DataFrame({'A': range(10), 'B': range(10, 20)})
 
 print("original dataframe:")
 print(df.head(10))
 
 print('\nadding a column:')
-new_col = range(0,20,2)
+new_col = range(0, 20, 2)
 df = my_mod.add_column(new_col, df, 'C')
 print(df.head(10))
 

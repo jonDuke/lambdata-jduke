@@ -3,6 +3,7 @@
 import pandas as pd
 import numpy as np
 
+
 def say_hello():
     """ says hello """
     print('Hello there!')
@@ -16,7 +17,7 @@ def add_column(data, dataframe, col_name):
 
     returns the modified dataframe
 
-    note: 
+    note:
     - if len(data) is less than len(dataframe), the remaining rows will be NaN
     - if len(data) is more than len(dataframe), the extra rows of data will be cut off
     """
@@ -56,10 +57,10 @@ def train_val_test_split(dataframe, val_ratio=.2, test_ratio=.2):
 
     param test_ratio: the percentage of data to put into the test portion
         - must be between 0.0 and 1.0
-    
+
     param val_ratio: the percentage of data to put into the validation portion
         - must be between 0.0 and 1.0
-    
+
     test_ratio + val_ratio must also be <= 1.0
         - if test_ratio + val_ratio == 1, train will be empty
 
@@ -83,7 +84,7 @@ def train_val_test_split(dataframe, val_ratio=.2, test_ratio=.2):
     df = df.reindex(np.random.permutation(df.index))
 
     # return the split
-    test_cutoff = int(len(df) * test_ratio) 
+    test_cutoff = int(len(df) * test_ratio)
     val_cutoff = int(len(df) * val_ratio) + test_cutoff
 
     return df[:-val_cutoff], df[-val_cutoff:-test_cutoff], df[-test_cutoff:]
